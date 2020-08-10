@@ -37,8 +37,9 @@ manufactureDefinitions(factories,datatypes){
 defineModels(defs){
 	_.each(defs,((def,model_name)=>{
 		var model
+		def.timestamps = def.timestamps ? true : false
 		try {
-			model=this.define(model_name,def.attributes,{indexes:def.indexes})
+			model=this.define(model_name,def.attributes,{indexes:def.indexes,timestamps:def.timestamps})
 		} catch (err) {
 			throw new Error("Bad model definition execution: "+
 				err+
