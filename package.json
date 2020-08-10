@@ -1,6 +1,6 @@
 {
   "name": "sequelize-modelreader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sequelize model reader",
   "main": "index.js",
   "scripts": {
