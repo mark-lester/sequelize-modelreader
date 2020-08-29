@@ -55,6 +55,9 @@ relateModels(defs){
 		if (!Array.isArray( def.relations ))
 			def.relations=[def.relations]
 
+		if (!def.relations)
+			return
+
 		def.relations.forEach((rel)=>{
 			if (typeof rel != 'object'){
 				throw new Error("Bad relation definition "+JSON.stringify(rel)+". In model "+name)
@@ -67,11 +70,14 @@ relateModels(defs){
 			if (!target){
 				throw new Error("Missing relatedModel "+JSON.stringify(rel)+". In model "+name)
 			}
-			var through
+			var options={}
 			if (rel.key)
-				through={through:rel.key}
+				options.through=rel.key
+			if (rel.as)
+				options.as=rel.as
+
 			try {
-				model[rel.type](target, through)
+				model[rel.type](target, options)
 			} catch (err) {
 				throw new Error("Bad relation execution: "+ err+
 					". Relation="+ JSON.stringify(rel)+
