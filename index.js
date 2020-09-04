@@ -39,7 +39,7 @@ defineModels(defs){
 		var model
 		def.timestamps = def.timestamps ? true : false
 		try {
-			model=this.define(model_name,def.attributes,{indexes:def.indexes,timestamps:def.timestamps})
+			model=this.define(model_name,def.attributes,{indexes:def.indexes,timestamps:def.timestamps,include:def.include})
 		} catch (err) {
 			throw new Error("Bad model definition execution: "+
 				err+
@@ -55,10 +55,10 @@ relateModels(defs){
 		if (!Array.isArray( def.relations ))
 			def.relations=[def.relations]
 
-		if (!def.relations)
-			return
-
 		def.relations.forEach((rel)=>{
+			if (!rel)
+				return
+
 			if (typeof rel != 'object'){
 				throw new Error("Bad relation definition "+JSON.stringify(rel)+". In model "+name)
 			}
